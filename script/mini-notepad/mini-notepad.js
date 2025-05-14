@@ -1,5 +1,5 @@
 (function () {
-  if (window.__simpleNotepad__) return; // Cegah duplikat
+  if (window.__simpleNotepad__) return;
   window.__simpleNotepad__ = true;
 
   const style = document.createElement("style");
@@ -18,6 +18,8 @@
       flex-direction: column;
       font-family: sans-serif;
       border-radius: 8px;
+      resize: none;
+      overflow: hidden;
     }
     #simple-notepad-header {
       background: #f0f0f0;
@@ -46,6 +48,15 @@
     #simple-notepad.minimized textarea {
       display: none;
     }
+    #simple-notepad-resizer {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      right: 0;
+      bottom: 0;
+      cursor: se-resize;
+      background: transparent;
+    }
   `;
   document.head.appendChild(style);
 
@@ -60,21 +71,27 @@
       </div>
     </div>
     <textarea placeholder="Tulis sesuatu..."></textarea>
+    <div id="simple-notepad-resizer"></div>
   `;
   document.body.appendChild(pad);
 
   const minimizeBtn = document.getElementById("minimize-btn");
   const closeBtn = document.getElementById("close-btn");
+  const resizer = document.getElementById("simple-notepad-resizer");
+  const textarea = pad.querySelector("textarea");
+
   minimizeBtn.onclick = () => {
     pad.classList.toggle("minimized");
     minimizeBtn.textContent = pad.classList.contains("minimized") ? "+" : "–";
   };
+
   closeBtn.onclick = () => {
-    document.body.removeChild(pad);
+    pad.remove();
+    style.remove();
     window.__simpleNotepad__ = false;
   };
 
-  // Drag and move
+  // Drag header to move
   const header = document.getElementById("simple-notepad-header");
   let isDragging = false, offsetX = 0, offsetY = 0;
 
@@ -82,6 +99,8 @@
     isDragging = true;
     offsetX = e.clientX - pad.offsetLeft;
     offsetY = e.clientY - pad.offsetTop;
+    pad.style.right = "auto";
+    pad.style.bottom = "auto";
     document.body.style.userSelect = "none";
   });
 
@@ -89,13 +108,33 @@
     if (isDragging) {
       pad.style.left = `${e.clientX - offsetX}px`;
       pad.style.top = `${e.clientY - offsetY}px`;
-      pad.style.right = "auto";
-      pad.style.bottom = "auto";
     }
   });
 
   document.addEventListener("mouseup", () => {
     isDragging = false;
     document.body.style.userSelect = "";
+  });
+
+  // Resize bottom-right
+  let isResizing = false, startX, startY, startWidth, startHeight;
+  resizer.addEventListener("mousedown", (e) => {
+    isResizing = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    startWidth = pad.offsetWidth;
+    startHeight = pad.offsetHeight;
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (isResizing) {
+      pad.style.width = startWidth + (e.clientX - startX) + "px";
+      pad.style.height = startHeight + (e.clientY - startY) + "px";
+    }
+  });
+
+  document.addEventListener("mouseup", () => {
+    isResizing = false;
   });
 })();
