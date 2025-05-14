@@ -13,7 +13,7 @@
       background: #fff;
       border: 1px solid #aaa;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 9999;
+      z-index: 999999;
       display: flex;
       flex-direction: column;
       font-family: sans-serif;
@@ -29,6 +29,7 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #ccc;
+      user-select: none;
     }
     #simple-notepad textarea {
       flex: 1;
@@ -50,8 +51,8 @@
     }
     #simple-notepad-resizer {
       position: absolute;
-      width: 12px;
-      height: 12px;
+      width: 15px;
+      height: 15px;
       right: 0;
       bottom: 0;
       cursor: se-resize;
@@ -78,7 +79,6 @@
   const minimizeBtn = document.getElementById("minimize-btn");
   const closeBtn = document.getElementById("close-btn");
   const resizer = document.getElementById("simple-notepad-resizer");
-  const textarea = pad.querySelector("textarea");
 
   minimizeBtn.onclick = () => {
     pad.classList.toggle("minimized");
@@ -88,10 +88,10 @@
   closeBtn.onclick = () => {
     pad.remove();
     style.remove();
-    window.__simpleNotepad__ = false;
+    window.__simpleNotepad__ = undefined;
   };
 
-  // Drag header to move
+  // Drag Move
   const header = document.getElementById("simple-notepad-header");
   let isDragging = false, offsetX = 0, offsetY = 0;
 
@@ -99,6 +99,8 @@
     isDragging = true;
     offsetX = e.clientX - pad.offsetLeft;
     offsetY = e.clientY - pad.offsetTop;
+    pad.style.left = `${pad.offsetLeft}px`;
+    pad.style.top = `${pad.offsetTop}px`;
     pad.style.right = "auto";
     pad.style.bottom = "auto";
     document.body.style.userSelect = "none";
@@ -116,7 +118,7 @@
     document.body.style.userSelect = "";
   });
 
-  // Resize bottom-right
+  // Resize from bottom-right
   let isResizing = false, startX, startY, startWidth, startHeight;
   resizer.addEventListener("mousedown", (e) => {
     isResizing = true;
@@ -129,8 +131,10 @@
 
   document.addEventListener("mousemove", (e) => {
     if (isResizing) {
-      pad.style.width = startWidth + (e.clientX - startX) + "px";
-      pad.style.height = startHeight + (e.clientY - startY) + "px";
+      const newWidth = startWidth + (e.clientX - startX);
+      const newHeight = startHeight + (e.clientY - startY);
+      pad.style.width = newWidth + "px";
+      pad.style.height = newHeight + "px";
     }
   });
 
