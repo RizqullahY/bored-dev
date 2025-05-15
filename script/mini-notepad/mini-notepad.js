@@ -10,6 +10,8 @@
       right: 20px;
       width: 300px;
       height: 200px;
+      min-width: 200px;
+      min-height: 100px;
       background: #fff;
       border: 1px solid #aaa;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -20,6 +22,9 @@
       border-radius: 8px;
       resize: none;
       overflow: hidden;
+    }
+    #simple-notepad.minimized {
+      height: 40px !important;
     }
     #simple-notepad-header {
       background: #f0f0f0;
@@ -39,15 +44,15 @@
       outline: none;
       font-size: 14px;
     }
+    #simple-notepad.minimized textarea {
+      display: none;
+    }
     #simple-notepad button {
       border: none;
       background: none;
       cursor: pointer;
       font-weight: bold;
       font-size: 16px;
-    }
-    #simple-notepad.minimized textarea {
-      display: none;
     }
     #simple-notepad-resizer {
       position: absolute;
@@ -79,10 +84,22 @@
   const minimizeBtn = document.getElementById("minimize-btn");
   const closeBtn = document.getElementById("close-btn");
   const resizer = document.getElementById("simple-notepad-resizer");
+  const textarea = pad.querySelector("textarea");
+
+  let isMinimized = false;
+  let lastHeight = pad.offsetHeight;
 
   minimizeBtn.onclick = () => {
-    pad.classList.toggle("minimized");
-    minimizeBtn.textContent = pad.classList.contains("minimized") ? "+" : "–";
+    isMinimized = !isMinimized;
+    if (isMinimized) {
+      lastHeight = pad.offsetHeight;
+      pad.classList.add("minimized");
+      minimizeBtn.textContent = "+";
+    } else {
+      pad.classList.remove("minimized");
+      pad.style.height = lastHeight + "px";
+      minimizeBtn.textContent = "–";
+    }
   };
 
   closeBtn.onclick = () => {
@@ -131,10 +148,10 @@
 
   document.addEventListener("mousemove", (e) => {
     if (isResizing) {
-      const newWidth = startWidth + (e.clientX - startX);
-      const newHeight = startHeight + (e.clientY - startY);
-      pad.style.width = newWidth + "px";
-      pad.style.height = newHeight + "px";
+      let newWidth = startWidth + (e.clientX - startX);
+      let newHeight = startHeight + (e.clientY - startY);
+      if (newWidth >= 200) pad.style.width = newWidth + "px";
+      if (newHeight >= 100 && !isMinimized) pad.style.height = newHeight + "px";
     }
   });
 
