@@ -59,5 +59,5 @@
     }
   });
 
-  createIndicator();
+  createIndicator(); 
 })();
