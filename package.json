@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
   },
   "repository": {
     "type": "git",
@@ -22,12 +25,12 @@
     "eslint": "^9.26.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
+    "simple-git-hooks": "^2.13.0",
     "terser": "^5.39.1"
   },
   "lint-staged": {
     "script/**/*.js": [
-      "terser --compress --mangle --output \"minified.js\" -- \"./script/wintrchess.com-shortcut/shortcut.js\"",
-      "mv minified.js ./script/wintrchess.com-shortcut/shortcut.min.js"
+      "terser --compress --mangle --output \":dir/:name.min.js\" -- \":path\""
     ]
   }
 }
