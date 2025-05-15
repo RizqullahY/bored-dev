@@ -1,7 +1,15 @@
 // shortcut-winterchess.js
 
 (function () {
-  console.log("WinterChess Shortcut Loaded");
+  alert(
+    "WinterChess Shortcuts:\n\n" +
+    "➡️  Arrow Right  = Next move\n" +
+    "⬅️  Arrow Left   = Last move\n" +
+    "🏠  Home         = Go to beginning\n" +
+    "⏭  End          = Go to end\n" +
+    "␣  Space        = Play/Pause"
+  );
+
 
   // Fungsi pencari tombol berdasarkan title
   function clickButtonByTitle(title) {
