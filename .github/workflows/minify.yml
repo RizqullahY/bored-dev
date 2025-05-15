@@ -1,41 +1,41 @@
-name: Auto Minify JS Files
+# name: Auto Minify JS Files
 
-on:
-  push:
-    paths:
-      - 'script/**/*.js'
-    branches:
-      - master
+# on:
+#   push:
+#     paths:
+#       - 'script/**/*.js'
+#     branches:
+#       - master
 
-jobs:
-  minify-js:
-    runs-on: ubuntu-latest
+# jobs:
+#   minify-js:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18'
 
-      - name: Install Terser
-        run: npm install terser -g
+#       - name: Install Terser
+#         run: npm install terser -g
 
-      - name: Find and minify JS files
-        run: |
-          find script -type f -name "*.js" ! -name "minified.*.js" | while read file; do
-            folder=$(dirname "$file")
-            filename=$(basename "$file")
-            name="${filename%.js}"
-            terser "$file" -o "$folder/minified.$name.js" --compress --mangle
-          done
+#       - name: Find and minify JS files
+#         run: |
+#           find script -type f -name "*.js" ! -name "minified.*.js" | while read file; do
+#             folder=$(dirname "$file")
+#             filename=$(basename "$file")
+#             name="${filename%.js}"
+#             terser "$file" -o "$folder/minified.$name.js" --compress --mangle
+#           done
 
-      - name: Commit minified files
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add script/**/minified.*.js
-          git commit -m "Auto minified JS files [skip ci]" || echo "No changes to commit"
-          git push
+#       - name: Commit minified files
+#         run: |
+#           git config user.name "github-actions"
+#           git config user.email "github-actions@github.com"
+#           git add script/**/minified.*.js
+#           git commit -m "Auto minified JS files [skip ci]" || echo "No changes to commit"
+#           git push
