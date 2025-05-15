@@ -22,15 +22,11 @@
   },
   "homepage": "https://github.com/RizqullahY/bored-dev#readme",
   "devDependencies": {
-    "eslint": "^9.26.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.0.0",
-    "simple-git-hooks": "^2.13.0",
     "terser": "^5.39.1"
   },
   "lint-staged": {
     "script/**/*.js": [
-      "terser --compress --mangle --output \":dir/:name.min.js\" -- \":path\""
+      "node minify.js"
     ]
   }
 }
