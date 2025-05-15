@@ -17,7 +17,7 @@ for FILE in $FILES; do
   grep -q "$OUT" "$HTML"
   if [ $? -ne 0 ]; then
     echo "➕ Menambahkan <a href=\"$OUT\"></a> ke $HTML"
-    echo "<a href=\"$OUT\">\"$OUT\"</a>" >> "$HTML"
+    echo "<br><a href=\"$OUT\">\"$OUT\"</a>" >> "$HTML"
   else
     echo "✅ Sudah ada: $OUT"
   fi
