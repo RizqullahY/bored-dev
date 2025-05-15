@@ -1,0 +1,10 @@
+# node
+node_modules/
+dist/
+*.log
+
+# OS
+.DS_Store
+
+# minified files if you don’t want to track them
+

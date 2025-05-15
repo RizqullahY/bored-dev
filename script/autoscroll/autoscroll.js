@@ -1,4 +1,6 @@
 (() => {
+  console.log("Autoscroll Ready")
+
   let isScrolling = false;
   let scrollInterval;
   let speed = 2;

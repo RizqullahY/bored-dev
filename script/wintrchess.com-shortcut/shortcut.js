@@ -1,27 +1,5 @@
 (function () {
-  showShortcutPopup();
-
-  function showShortcutPopup() {
-    const box = document.createElement('div');
-    box.innerHTML = `
-      <div style="
-        position: fixed; top: 20px; right: 20px; background: #fefefe; color: #222;
-        padding: 14px 18px; border: 1px solid #aaa; border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-family: sans-serif;
-        font-size: 14px; line-height: 1.5; z-index: 9999;
-      ">
-        <strong>♟️ WinterChess Shortcuts</strong><br><br>
-        ➡️ Arrow Right – Next move<br>
-        ⬅️ Arrow Left – Last move<br>
-        🏠 Home – Go to beginning<br>
-        ⏭ End – Go to end<br>
-        ␣ Space – Play/Pause
-      </div>
-    `;
-    const popup = box.firstElementChild;
-    document.body.appendChild(popup);
-    setTimeout(() => popup.remove(), 7000);
-  }
+  console.log("Shortcut Ready")
 
   function clickButtonByTitle(title) {
     const button = document.querySelector(`img[title="${title}"]`);

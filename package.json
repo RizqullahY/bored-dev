@@ -1,0 +1,33 @@
+{
+  "name": "bored-dev",
+  "version": "1.0.0",
+  "description": "![image](https://github.com/user-attachments/assets/77e463f3-9b70-413c-9086-f9aabef50c69)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RizqullahY/bored-dev.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RizqullahY/bored-dev/issues"
+  },
+  "homepage": "https://github.com/RizqullahY/bored-dev#readme",
+  "devDependencies": {
+    "eslint": "^9.26.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
+    "terser": "^5.39.1"
+  },
+  "lint-staged": {
+    "script/**/*.js": [
+      "terser --compress --mangle --output \"minified.js\" -- \"./script/wintrchess.com-shortcut/shortcut.js\"",
+      "mv minified.js ./script/wintrchess.com-shortcut/shortcut.min.js"
+    ]
+  }
+}
