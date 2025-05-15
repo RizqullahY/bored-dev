@@ -5,7 +5,7 @@ on:
     paths:
       - 'script/**/*.js'
     branches:
-      - main 
+      - master
 
 jobs:
   minify-js:
