@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "GIF Remover",
+    "version": "1.0",
+    "description": "Remove all .gif images from websites.",
+    "permissions": ["scripting", "activeTab"],
+    "action": {
+      "default_title": "Remove GIFs"
+    },
+    "background": {
+      "service_worker": "background.js"
+    }
+  }
+  
